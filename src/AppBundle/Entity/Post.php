@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Theme;
 use AppBundle\Entity\Answer;
+use Gedmo/Mapping/Annotation as Gedmo;
+
 
 /**
  * Post
@@ -30,6 +32,16 @@ class Post
      * @ORM\Column(name="title", type="string", length=80)
      */
     private $title;
+
+
+    /**
+     * @var
+     * @ORM\Column(name="slug",type="string", length=255, unique=true)
+     * @Gedmo\Slug(flields={"author","title"})
+     */
+    private $slug;
+
+
 
     /**
      * @var string
@@ -57,24 +69,7 @@ class Post
      */
     private $answers;
 
-    /**
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
 
-    /**
-     * @param string $author
-     * @return Post
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-
-        return $this;
-    }
 
 
     /**
@@ -201,6 +196,23 @@ class Post
     }
 
     /**
+     * @return mixed
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param mixed $slug
+     * @return Post
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+    /**
      * Add answer
      *
      * @param \AppBundle\Entity\Answer $answer
@@ -232,5 +244,25 @@ class Post
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param string $author
+     * @return Post
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

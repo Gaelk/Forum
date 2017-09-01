@@ -17,10 +17,19 @@ class DefaultController extends Controller
     {
         $repository = $this->getDoctrine()
             ->getRepository("AppBundle:Theme");
-
+        $postRepository= $this->getDoctrine()
+            ->getRepository("AppBundle:Post");
+    /*
+     *
         $themeList = $repository->findAll();
-
         return $this->render('default/index.html.twig', ["themeList" => $themeList]);
+    */
+
+        //utilisation de la fonction Repository
+        $list=$repository->getAllThemes()->getArrayResult();
+        $postListByYear=$postRepository->getPostsGroupedByYear();
+
+        return $this->render('default/index.html.twig', ["themeList" => $list, "postList"=>$postListByYear]);
     }
 
     /**
@@ -34,6 +43,8 @@ class DefaultController extends Controller
             ->getRepository("AppBundle:Theme");
 
         $theme = $repository->find($id);
+        //recuperation de la fonction repository getAllThemes(AppBundle/Repository/ThemeRepository.php)
+        $allThemes=$repository->getAllThemes()->getResult();
 
         if(! $theme){
             throw new NotFoundHttpException("Thème introuvable");
@@ -42,7 +53,8 @@ class DefaultController extends Controller
 
         return $this->render('default/theme.html.twig', [
             "theme" => $theme,
-            "postList" => $theme->getPosts()
+            "postList" => $theme->getPosts(),
+            "all"=>  $allThemes
         ]);
     }
 }

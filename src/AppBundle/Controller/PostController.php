@@ -37,4 +37,19 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * @param $year
+     * @return Response
+     * @Route("/post-par-annee/{year}", name="post_by_year",
+     *     requirements={"year":"\d{4}"})
+     */
+    public function postByYearAction($year){
+
+        $repository = $this->getDoctrine()->getRepository("AppBundle:Post");
+        $post=$repository->getPostByYear($year);
+
+
+        return $this->render("default/theme.html.twig", ["postList"=>$post, "title"=>"Liste de postes de l'année  $year "] );
+    }
+
 }
