@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\AppBundle;
 use AppBundle\Entity\Theme;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -23,9 +24,10 @@ class PostType extends AbstractType
     {
         $builder->add('title', TextType::class, ['label'=>'Titre'])
                 //->add('slug')   Génération automatique donc pas besoin de mettre
-                ->add('text', TextareaType::class, ["label"=>"Texte", "attr"=>["rows"=>12]])
+                ->add('text', CKEditorType::class, ["label"=>"Texte", "attr"=>["rows"=>12]])
                 ->add('author', EmailType::class, ["label"=>"Auteur"])
-                ->add('createdAt', DateTimeType::class,["label"=>"date de publication"])
+            //widget
+                ->add('createdAt', DateTimeType::class,["label"=>"date de publication","widget"=>"single_text"])
                 ->add('theme', EntityType::class, ["class"=>"AppBundle\Entity\Theme", "placeholder"=>"choissez un theme", "choice_label"=>"name"])
                 ->add('submit',SubmitType::class, ["label"=>"Valider"]);
 

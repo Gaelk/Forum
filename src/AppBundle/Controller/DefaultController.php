@@ -28,6 +28,7 @@ class DefaultController extends Controller
     */
         //creation formulaire
         $post=new Post();
+        $post->setCreatedAt(new \DateTime());
         $form=$this->createForm(PostType::class, $post);
 
         //hydratation de l'entité   | $_GET est recuperé avec une variable  $request de type Request en param de la function
