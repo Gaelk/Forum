@@ -48,6 +48,8 @@ class PostController extends Controller
         $post=$repository->getPostByYear($year);
 
 
+
+
         return $this->render("default/theme.html.twig", ["postList"=>$post, "title"=>"Liste de postes de l'année  $year "] );
     }
 

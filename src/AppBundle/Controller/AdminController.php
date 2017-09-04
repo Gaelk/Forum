@@ -46,6 +46,7 @@ class AdminController extends Controller
 
             return $this->redirectToRoute("admin/themes");
         }
+
         return $this->render("admin/theme.html.twig", ["themeList" => $themeList, "themeForm"=>$form->createView()]);
     }
 

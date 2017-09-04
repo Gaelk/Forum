@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Post;
+use AppBundle\Form\PostType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +15,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction( Request $request)
     {
         $repository = $this->getDoctrine()
             ->getRepository("AppBundle:Theme");
@@ -24,12 +26,31 @@ class DefaultController extends Controller
         $themeList = $repository->findAll();
         return $this->render('default/index.html.twig', ["themeList" => $themeList]);
     */
+        //creation formulaire
+        $post=new Post();
+        $form=$this->createForm(PostType::class, $post);
+
+        //hydratation de l'entité   | $_GET est recuperé avec une variable  $request de type Request en param de la function
+        $form->handleRequest($request);
+
+        //traitement du formulaire
+
+        if ($form->isSubmitted() and $form->isValid()){
+            //Persistance de l'entité
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+
+            return $this->redirectToRoute("homepage");
+        }
+
+
 
         //utilisation de la fonction Repository
         $list=$repository->getAllThemes()->getArrayResult();
         $postListByYear=$postRepository->getPostsGroupedByYear();
 
-        return $this->render('default/index.html.twig', ["themeList" => $list, "postList"=>$postListByYear]);
+        return $this->render('default/index.html.twig', ["themeList" => $list, "postList"=>$postListByYear, "postForm"=>$form->createView()]);
     }
 
     /**
