@@ -6,7 +6,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Theme;
 use AppBundle\Entity\Answer;
-use Gedmo/Mapping/Annotation as Gedmo;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+
 
 
 /**
@@ -35,9 +37,9 @@ class Post
 
 
     /**
-     * @var
+     * @var string
      * @ORM\Column(name="slug",type="string", length=255, unique=true)
-     * @Gedmo\Slug(flields={"author","title"})
+     * @Gedmo\Slug(fields={"author","title"})
      */
     private $slug;
 
