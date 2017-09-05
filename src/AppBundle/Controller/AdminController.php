@@ -18,6 +18,24 @@ class AdminController extends Controller
 {
 
     /**
+     * @Route("/", name="admin_home")
+     * @return Response
+     */
+    public function indexAction(){
+        return $this->render("admin/index.html.twig");
+    }
+
+    /**
+     * @Route("/login", name="admin_login")
+     * @return Response
+     */
+    public function admin_loginAction(){
+
+
+       return $this->render("default/generic-login.html.twig",["action"=>$this->generateUrl("admin_login_check"), "title"=>"login utilisateur"]);
+    }
+
+    /**
      * @Route("/themes", name="admin_themes")
      * @return Response
      */

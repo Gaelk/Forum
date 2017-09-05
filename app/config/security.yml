@@ -5,13 +5,34 @@ security:
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
-            memory: ~
+            memory:
+              users:
+                admin: { password: 123, roles : ["ROLE_ADMIN"]}
+    encoders:
+      Symfony\Component\Security\Core\User\User: plaintext
+
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
+        admin_login_firewall:
+          pattern: ^/admin/login$
+          anonymous: ~
+
+        admin_firewall:
+          pattern: ^/admin
+          provider: in_memory
+          form_login:
+            login_path: admin_login
+            check_path: admin_login_check
+            default_target_path: admin_home
+
+          logout:
+            path: admin_logout
+            target: homepage
 
         main:
             anonymous: ~
