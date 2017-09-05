@@ -31,7 +31,7 @@ class AdminController extends Controller
      */
     public function admin_loginAction(){
 
-
+     //repetition du formulaire en cas d'echec d'authentifiacation
         $securityUtils=$this->get("security.authentication_utils");
         $lastUserName= $securityUtils->getLastUsername();
         $error=$securityUtils->getLastAuthenticationError();
