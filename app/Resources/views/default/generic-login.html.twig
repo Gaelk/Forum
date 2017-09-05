@@ -2,6 +2,16 @@
 
 {% block body %}
 <h2> {{ title }}</h2>
+
+        {%  if error%}
+            <div class="alert alert-danger">
+                {{ error.message | trans }}{{ 'user.bad-credentials.swear' | trans }}
+            </div>
+        {% endif %}
+
+
+
+
     <form action="{{ action }}" method="post">
         <div class="form-group">
             <label for="username">Login</label>

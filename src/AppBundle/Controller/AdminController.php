@@ -32,7 +32,12 @@ class AdminController extends Controller
     public function admin_loginAction(){
 
 
-       return $this->render("default/generic-login.html.twig",["action"=>$this->generateUrl("admin_login_check"), "title"=>"login utilisateur"]);
+        $securityUtils=$this->get("security.authentication_utils");
+        $lastUserName= $securityUtils->getLastUsername();
+        $error=$securityUtils->getLastAuthenticationError();
+
+       return $this->render("default/generic-login.html.twig",["action"=>$this->generateUrl("admin_login_check"), "title"=>"login utilisateur",
+                                                                     "error"=>$error,"lastUserName"=>$lastUserName ]);
     }
 
     /**
