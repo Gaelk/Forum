@@ -8,10 +8,17 @@ security:
             memory:
               users:
                 admin: { password: $2y$15$0rrkPYy8aIiM3fs4WkPizOIljSB7BXfufOh6UZwvxThi8DmWotB8y , roles : ["ROLE_ADMIN"]}
+                god:
+                   password: $2y$15$2I4U.uU6dOEaXlFT7QyfI.Yj1XWVB0GAozUe72B5gTc.b8WJyRMbK
+                   roles: ["ROLE_SUPER_ADMIN", "ROLE_ADMIN"]
+
     encoders:
       Symfony\Component\Security\Core\User\User:
-          algorithm: bcrypt
-          cost: 15
+        algorithm: bcrypt
+        cost: 15
+
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: ROLE_ALLOWED_TO_SWITCH
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -44,3 +51,5 @@ security:
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             #form_login: ~
+    access-control:
+      - { path: "^/admin/secure", roles: "ROLE_SUPER_ADMIN" }

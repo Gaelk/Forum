@@ -38,6 +38,17 @@ class AdminController extends Controller
 
        return $this->render("default/generic-login.html.twig",["action"=>$this->generateUrl("admin_login_check"), "title"=>"login utilisateur",
                                                                      "error"=>$error,"lastUserName"=>$lastUserName ]);
+
+
+    }
+
+
+    /**
+     * @Route("/secure", name="admin_only_god")
+     * @return Response
+     */
+    public function onlyGodAction(){
+        return $this->render("admin/god.html.twig");
     }
 
     /**
